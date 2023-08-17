@@ -99,15 +99,109 @@ const tree = function (array) {
         return levelOrderArray
     }
 
+    const preOrder = function (currentNode = root, preOrderArray = []) {
+    
+        if (currentNode == null) return
+
+        preOrderArray.push(currentNode.data)
+        preOrder(currentNode.leftNode, preOrderArray)
+        preOrder(currentNode.rightNode, preOrderArray)
+
+        return preOrderArray
+    }
+
+    const inOrder = function (currentNode = root, inOrderArray = []) {
+        
+        if (currentNode == null) return
+        
+        inOrder(currentNode.leftNode, inOrderArray)
+        inOrderArray.push(currentNode.data)
+        inOrder(currentNode.rightNode, inOrderArray)
+
+        return inOrderArray
+    }
+
+    const postOrder = function (currentNode = root, postOrderArray = []) {
+        
+        if (currentNode == null) return
+        
+        postOrder(currentNode.leftNode, postOrderArray)
+        postOrder(currentNode.rightNode, postOrderArray)
+        postOrderArray.push(currentNode.data)
+
+        return postOrderArray
+    }
+
+    const height = function (currentNode = root) {
+        
+        if (currentNode == null) return -1
+        
+        let leftHeight = height(currentNode.leftNode)
+        let rightHeight = height(currentNode.rightNode)
+        let result = Math.max(leftHeight,rightHeight) + 1 
+
+        return result
+    }
+
+    const depth = function (value, currentNode = root, level = 0) {
+        
+        if (currentNode == null) {
+            return 
+        }
+
+        if (value == currentNode.data) {
+            return level
+        }
+
+        if (value < currentNode.data) {
+            return depth(value, currentNode.leftNode, level += 1)
+        } else {
+            return depth(value, currentNode.rightNode, level += 1)
+        }
+    }
+
+    const isBalanced = function (currentNode = root) {
+        
+        if (currentNode == null) return true
+
+        let leftHeight = height(currentNode.leftNode)   
+        let rightHeight = height(currentNode.rightNode)
+            
+        if (Math.abs(leftHeight - rightHeight) <= 1 && isBalanced(currentNode.leftNode) == true && isBalanced(currentNode.rightNode) == true) {
+            return true
+        } 
+        return false       
+    }
+
+    const reBalance = function () {
+        
+        let newArray = inOrder()
+        root = buildTree(newArray)
+        return root
+    }
+
+    const getRoot = function () {
+        return root
+    }
+
     return {
-        root,
+        getRoot,
         buildTree,
         insert,
         deletion,
         find,
-        levelOrder
+        levelOrder,
+        preOrder,
+        inOrder,
+        postOrder,
+        height,
+        depth,
+        isBalanced,
+        reBalance
     }
 }
 
 let test = tree([1, 2, 3, 4, 5, 6, 7])
+
+
 
