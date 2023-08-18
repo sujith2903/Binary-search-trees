@@ -201,7 +201,8 @@ const tree = function (array) {
     }
 }
 
-let test = tree([1, 2, 3, 4, 5, 6, 7])
+export default tree
+
 
 
 
